@@ -66,7 +66,8 @@ public class UserController {
             for(ObjectError error : result.getAllErrors()) {
                 errorList.add(error.getDefaultMessage());
             }
-            model.addAttribute(errorList);
+            model.addAttribute("validationError", errorList);
+            model.addAttribute("userRequest", userRequest);
             return "user/add";
         }
         // 新規ユーザーの登録
