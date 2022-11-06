@@ -24,11 +24,11 @@ public class UserController {
 	 * @param model Model
 	 * @return ユーザー情報一覧画面
 	 */
-	@GetMapping(value = "/user/list")
+	@GetMapping("user/list")
 	public String displayList(Model model) {
 	    List<User> userList = userService.searchAll();
 	    model.addAttribute(userList);
-	    return "user/list/";
+	    return "user/list";
 	}
 	
 	  /**
@@ -36,7 +36,7 @@ public class UserController {
 	   * @param model Model
 	   * @return ユーザー情報一覧画面
 	   */
-	  @GetMapping(value = "/user/add")
+	  @GetMapping("user/add")
 	  public String displayAdd(Model model) {
 	    return "user/add";
 	  }
@@ -46,7 +46,7 @@ public class UserController {
 	   * @param model Model
 	   * @return ユーザー情報詳細画面
 	   */
-	  @GetMapping("/user/{id}")
+	  @GetMapping("user/{id}")
 	  public String displayView(@PathVariable Long id, Model model) {
 	    return "user/view";
 	  }
