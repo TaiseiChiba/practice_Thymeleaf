@@ -29,6 +29,15 @@ public class UserService {
     }
     
     /**
+     * idからユーザーを取得します。
+     * @param id ユーザーID
+     * @return IDに紐づくユーザー
+     */
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
+    }
+    
+    /**
      * ユーザーを登録します。
      * @param userRequest　登録画面からのリクエストデータ
      */
