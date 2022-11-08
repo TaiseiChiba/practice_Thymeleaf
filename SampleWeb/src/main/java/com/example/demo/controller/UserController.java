@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.dto.UserRequest;
 import com.example.demo.entity.User;
+import com.example.demo.repository.UserUpdateRequest;
 import com.example.demo.service.UserService;
 
 /**
@@ -86,5 +87,17 @@ public class UserController {
         User user = userService.findById(id);
         model.addAttribute("userData", user);
         return "user/view";
+    }
+    
+    @GetMapping("user/{id}/edit")
+    public String displayEdit(@PathVariable Long id, Model model) {
+        User user = userService.findById(id);
+        UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
+        user.setId(id);
+        user.setName(userUpdateRequest.getName());
+        user.setAddress(userUpdateRequest.getAddress());
+        user.setPhone(userUpdateRequest.getPhone());
+        model.addAttribute("userUpdateRequest", user);
+        return "/user/edit";
     }
 }
