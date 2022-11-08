@@ -93,11 +93,11 @@ public class UserController {
     public String displayEdit(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
         UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
-        user.setId(id);
-        user.setName(userUpdateRequest.getName());
-        user.setAddress(userUpdateRequest.getAddress());
-        user.setPhone(userUpdateRequest.getPhone());
-        model.addAttribute("userUpdateRequest", user);
-        return "/user/edit";
+        userUpdateRequest.setId(user.getId());
+        userUpdateRequest.setName(user.getName());
+        userUpdateRequest.setPhone(user.getPhone());
+        userUpdateRequest.setAddress(user.getAddress());
+        model.addAttribute("userUpdateRequest", userUpdateRequest);
+        return "user/edit";
     }
 }

@@ -5,26 +5,31 @@
 <body>
     <div class="container">
         <h1>ユーザー情報編集</h1>
-        <div th:object="${userUpdateRequest}">
-            <div class="row mx-md-n5">
-                <div class="col-2 pt-3 border bg-light">名前</div>
-                <div class="col pt-3 border">
-                    <p th:text="*{name}"></p>
+        <form th:action="@{user/update}" th:object="${userUpdateRequest}" th:method="post">
+            <div class="invisible">
+                <input type="hidden" th:field="*{id}" />
+            </div>
+            <div th:object="${userUpdateRequest}">
+                <div class="row mx-md-n5">
+                    <div class="col-2 pt-3 border bg-light">名前<span class="text-danger">※必須項目です</span></div>
+                    <div class="col pt-3 border">
+                        <input type="text" class="form-control" th:field="*{name}">
+                    </div>
+                </div>
+                <div class="row mx-md-n5">
+                    <div class="col-2 pt-3 border bg-light">住所</div>
+                    <div class="col pt-3 border">
+                        <input type="text" class="form-control" th:field="*{address}">
+                    </div>
+                </div>
+                <div class="row mx-md-n5">
+                    <div class="col-2 pt-3 border bg-light">電話番号<span class="text-danger">※必須項目です</span></div>
+                    <div class="col pt-3 border">
+                        <input type="text" class="form-control" th:field="*{phone}">
+                    </div>
                 </div>
             </div>
-            <div class="row mx-md-n5">
-                <div class="col-2 pt-3 border bg-light">住所</div>
-                <div class="col pt-3 border">
-                    <p th:text="*{address}"></p>
-                </div>
-            </div>
-            <div class="row mx-md-n5">
-                <div class="col-2 pt-3 border bg-light">電話番号</div>
-                <div class="col pt-3 border">
-                    <p th:text="*{phone}"></p>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </body>
 </html>
