@@ -53,4 +53,11 @@ public class UserService {
         
         userRepository.save(user);
     }
+    
+    @Transactional
+    public void update(User user, UserRequest userRequest) {
+        User updatedUser = new User();
+        Date now = new Date();
+        
+    }
 }

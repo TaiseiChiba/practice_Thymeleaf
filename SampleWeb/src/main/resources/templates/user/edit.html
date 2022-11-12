@@ -7,29 +7,44 @@
         <h1>ユーザー情報編集</h1>
         <form th:action="@{user/update}" th:object="${userUpdateRequest}" th:method="post">
             <div class="invisible">
-                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="${userUpdateRequest}" id="userData">
+                <input type="hidden" th:field="*{id}" th:value="*{id}" id="userId">
+                <input type="hidden" th:value="*{name}" id="userName">
+                <input type="hidden" th:value="*{address}" id="userAddress">
+                <input type="hidden" th:value="*{phone}" id="userPhone">
             </div>
-            <div th:object="${userUpdateRequest}">
+            <div>
                 <div class="row mx-md-n5">
-                    <div class="col-2 pt-3 border bg-light">名前<span class="text-danger">※必須項目です</span></div>
-                    <div class="col pt-3 border">
+                    <div class="col-4 pt-3 border bg-light">名前<span class="text-danger">※必須項目です</span></div>
+                    <div class="col py-2 border">
                         <input type="text" class="form-control" th:field="*{name}">
                     </div>
                 </div>
                 <div class="row mx-md-n5">
-                    <div class="col-2 pt-3 border bg-light">住所</div>
-                    <div class="col pt-3 border">
+                    <div class="col-4 pt-3 border bg-light">住所</div>
+                    <div class="col py-2 border">
                         <input type="text" class="form-control" th:field="*{address}">
                     </div>
                 </div>
                 <div class="row mx-md-n5">
-                    <div class="col-2 pt-3 border bg-light">電話番号<span class="text-danger">※必須項目です</span></div>
-                    <div class="col pt-3 border">
+                    <div class="col-4 pt-3 border bg-light">電話番号<span class="text-danger">※必須項目です</span></div>
+                    <div class="col py-2 border">
                         <input type="text" class="form-control" th:field="*{phone}">
                     </div>
                 </div>
             </div>
+            <div class="text-center mb-3 pt-4">
+                <input type="submit" class="btn btn-primary" value="　保存　" id="btn-submit">
+                <a th:href="@{/user/{id}(id=*{id})}" class="btn btn-secondary">キャンセル</a>
+            </div>
         </form>
     </div>
+       <th:block id="plugins">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </th:block>
+    
+    <th:block id="scripts">
+        <script type="text/javascript" th:src="@{/js/user/edit.js}"></script>
+    </th:block>
 </body>
 </html>
