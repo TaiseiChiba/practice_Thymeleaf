@@ -77,7 +77,7 @@ public class UserController {
     }
 
     /**
-     * ユーザー情報詳細画面を表示
+     * ユーザー情報詳細画面を表示します。
      * @param id 表示するユーザーID
      * @param model Model
      * @return ユーザー情報詳細画面
@@ -89,6 +89,12 @@ public class UserController {
         return "user/view";
     }
     
+    /**
+     * ユーザー情報編集画面を表示します。
+     * @param id 表示するユーザーID
+     * @param model Model
+     * @return ユーザー情報編集画面
+     */
     @GetMapping("user/{id}/edit")
     public String displayEdit(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
@@ -99,5 +105,24 @@ public class UserController {
         userUpdateRequest.setAddress(user.getAddress());
         model.addAttribute("userUpdateRequest", userUpdateRequest);
         return "user/edit";
+    }
+    
+    @PostMapping("user/update")
+    public String update(@Validated @ModelAttribute UserUpdateRequest userUpdateRequest,
+            BindingResult result,
+            Model model) {
+        // 入力エラーがある場合
+        if (result.hasErrors()) {
+            List<String> errorList = new ArrayList<String>();
+            for(ObjectError error : result.getAllErrors()) {
+                errorList.add(error.getDefaultMessage());   
+            }
+            model.addAttribute("validationError", errorList);
+            model.addAttribute("userUpdateRequest", userUpdateRequest);
+            return "user/edit";
+        }
+        // ユーザー情報の更新
+        userService.update(userUpdateRequest);
+        return String.format("redirect:/user/%d", userUpdateRequest.getId());
     }
 }
