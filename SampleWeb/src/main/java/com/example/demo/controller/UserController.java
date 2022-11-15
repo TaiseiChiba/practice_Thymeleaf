@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.dto.UserRequest;
 import com.example.demo.entity.User;
+import com.example.demo.repository.UserUpdateRequest;
 import com.example.demo.service.UserService;
 
 /**
@@ -76,7 +77,7 @@ public class UserController {
     }
 
     /**
-     * ユーザー情報詳細画面を表示
+     * ユーザー情報詳細画面を表示します。
      * @param id 表示するユーザーID
      * @param model Model
      * @return ユーザー情報詳細画面
@@ -86,5 +87,42 @@ public class UserController {
         User user = userService.findById(id);
         model.addAttribute("userData", user);
         return "user/view";
+    }
+    
+    /**
+     * ユーザー情報編集画面を表示します。
+     * @param id 表示するユーザーID
+     * @param model Model
+     * @return ユーザー情報編集画面
+     */
+    @GetMapping("user/{id}/edit")
+    public String displayEdit(@PathVariable Long id, Model model) {
+        User user = userService.findById(id);
+        UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
+        userUpdateRequest.setId(user.getId());
+        userUpdateRequest.setName(user.getName());
+        userUpdateRequest.setPhone(user.getPhone());
+        userUpdateRequest.setAddress(user.getAddress());
+        model.addAttribute("userUpdateRequest", userUpdateRequest);
+        return "user/edit";
+    }
+    
+    @PostMapping("user/update")
+    public String update(@Validated @ModelAttribute UserUpdateRequest userUpdateRequest,
+            BindingResult result,
+            Model model) {
+        // 入力エラーがある場合
+        if (result.hasErrors()) {
+            List<String> errorList = new ArrayList<String>();
+            for(ObjectError error : result.getAllErrors()) {
+                errorList.add(error.getDefaultMessage());   
+            }
+            model.addAttribute("validationError", errorList);
+            model.addAttribute("userUpdateRequest", userUpdateRequest);
+            return "user/edit";
+        }
+        // ユーザー情報の更新
+        userService.update(userUpdateRequest);
+        return String.format("redirect:/user/%d", userUpdateRequest.getId());
     }
 }

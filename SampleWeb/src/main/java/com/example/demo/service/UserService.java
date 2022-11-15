@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.UserUpdateRequest;
 
 /**
  * ユーザー情報 Service.
@@ -50,7 +51,21 @@ public class UserService {
         user.setPhone(userRequest.getPhone());
         user.setCreateDate(now);
         user.setUpdateDate(now);
-        
+        userRepository.save(user);
+    }
+    
+    /**
+     * ユーザー情報をアップデートします。
+     * @param userUpdateRequest ユーザー情報編集画面からのリクエストスコープ
+     */
+    @Transactional
+    public void update(UserUpdateRequest userUpdateRequest) {
+        User user = findById(userUpdateRequest.getId());
+        Date now = new Date();
+        user.setName(userUpdateRequest.getName());
+        user.setAddress(userUpdateRequest.getAddress());
+        user.setPhone(userUpdateRequest.getPhone());
+        user.setUpdateDate(now);
         userRepository.save(user);
     }
 }
